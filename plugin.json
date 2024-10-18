@@ -1,0 +1,25 @@
+{
+  "logo": "logo.png",
+  "main": "index.html",
+  "preload": "preload.js",
+  "name": "utools-php-unserialize",
+  "version": "1.0.0",
+  "pluginName": "PHP Serialize Matcher",
+  "description": "匹配PHP序列化字符串的插件",
+  "author": "shangdev",
+  "homepage": "https://github.com/shangdev/utools-php-unserialize",
+  "features": [
+    {
+      "code": "match-php-serialize",
+      "explain": "匹配PHP序列化字符串",
+      "cmds": [
+        "php反序列化",
+        {
+          "type": "regex",
+          "label": "php序列化匹配",
+          "match": "/^(a|O|s|i|d|b|N):\\d+:(?:{.*}|\".*\"|\\d+(?:\\.\\d+)?|[01]);?$/i"
+        }
+      ]
+    }
+  ]
+}
