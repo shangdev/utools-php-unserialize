@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from "vue";
-import serialize from "locutus/php/var/serialize";
-import unserialize from "locutus/php/var/unserialize";
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 import editorWorker from "monaco-editor/esm/vs/editor/editor.worker?worker";
 import tsWorker from "monaco-editor/esm/vs/language/typescript/ts.worker?worker";
@@ -46,7 +44,7 @@ function showToastMessage(message: string) {
 function handleUnserialize() {
   const value = editor?.getValue() || "";
   try {
-    parsedValue.value = unserialize(value);
+    parsedValue.value = window.php.unserialize(value);
     if (parsedValue.value) {
       const jsonString = JSON.stringify(parsedValue.value, null, 2);
       editor?.setValue(jsonString);
@@ -61,7 +59,7 @@ function handleSerialize() {
   const value = editor?.getValue() || "";
   try {
     shouldAutoUnserialize.value = false;
-    const serialized = serialize(JSON.parse(value));
+    const serialized = window.php.serialize(JSON.parse(value));
     editor?.setValue(serialized);
     setTimeout(() => {
       shouldAutoUnserialize.value = true;
@@ -96,7 +94,7 @@ function handleEditorChange(value: string) {
   }
 
   try {
-    parsedValue.value = unserialize(value);
+    parsedValue.value = window.php.unserialize(value);
     if (parsedValue.value) {
       const jsonString = JSON.stringify(parsedValue.value, null, 2);
       if (editor && editor.getValue() !== jsonString) {
